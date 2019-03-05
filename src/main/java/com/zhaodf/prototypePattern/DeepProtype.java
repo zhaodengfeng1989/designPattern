@@ -1,31 +1,49 @@
 package com.zhaodf.prototypePattern;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeepProtype implements Cloneable,Serializable {
-    private int age;
-    private List<String> list = new ArrayList<String>();
+public class DeepProtype implements Serializable{
+    private Person person = new Person();
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    protected Object clone() {
+        //序列化
+        ByteArrayOutputStream bos = null;
+        ObjectOutputStream oos = null;
+
+        //反序列化
+        ByteArrayInputStream bis = null;
+        ObjectInputStream ois = null;
+        try {
+            bos = new ByteArrayOutputStream();
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(this);
+
+            bis = new ByteArrayInputStream(bos.toByteArray());
+            ois = new ObjectInputStream(bis);
+            DeepProtype dp = (DeepProtype) ois.readObject();
+            return dp;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                bos.close();
+                oos.close();
+                bis.close();
+                ois.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
-    public int getAge() {
-        return age;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public List<String> getList() {
-        return list;
-    }
-
-    public void setList(List<String> list) {
-        this.list = list;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

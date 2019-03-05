@@ -4,27 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConcreteProtype implements Cloneable  {
-    private int age;
-    private List<String> list = new ArrayList<String>();
-
+    private Person person = new Person();
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
-    public int getAge() {
-        return age;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public List<String> getList() {
-        return list;
-    }
-
-    public void setList(List<String> list) {
-        this.list = list;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }
